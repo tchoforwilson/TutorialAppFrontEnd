@@ -14,30 +14,9 @@ const ChangePassword = () => {
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
   const handleChange = (e) => {
-    switch (e.target.name) {
-      case 'currentPassword':
-        setData({
-          currentPassword: e.target.value,
-          password: data.password,
-          passwordConfirm: data.passwordConfirm,
-        })
-        break
-      case 'password':
-        setData({
-          currentPassword: data.currentPassword,
-          password: e.target.value,
-          passwordConfirm: data.passwordConfirm,
-        })
-        break
-      case 'passwordConfirm':
-        setData({
-          currentPassword: data.currentPassword,
-          password: data.password,
-          passwordConfirm: e.target.value,
-        })
-        break
-      default:
-    }
+    let user = data
+    user[e.target.name] = e.target.value
+    setData({ ...user })
   }
   const handleClick = async (e) => {
     e.preventDefault()

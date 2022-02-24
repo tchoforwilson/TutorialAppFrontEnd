@@ -28,15 +28,9 @@ const Tutorial = () => {
     }
   }
   const handleChange = (e) => {
-    e.target.name === 'title'
-      ? setCurrrentTutorial({
-          title: e.target.value,
-          description: currentTutorial.description,
-        })
-      : setCurrrentTutorial({
-          description: e.target.value,
-          title: currentTutorial.title,
-        })
+    let currentTut = currentTutorial
+    currentTut[e.target.name] = e.target.value
+    setCurrrentTutorial({ ...currentTut })
   }
   const updatePublished = (e) => {
     !currentTutorial.published

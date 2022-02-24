@@ -51,7 +51,6 @@ const Users = () => {
               <th scope="col">Email</th>
               <th scope="col">Photo</th>
               <th scope="col">Date Created</th>
-              <th scope="col">Make Publisher</th>
             </tr>
           </thead>
           <tbody>
@@ -68,7 +67,6 @@ const Users = () => {
                   />
                 </th>
                 <th>{user.createdOn}</th>
-                <th></th>
               </tr>
             ))}
           </tbody>

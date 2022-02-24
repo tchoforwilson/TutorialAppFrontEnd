@@ -27,7 +27,7 @@ export function getMe() {
  * @returns Promise
  */
 export function updateMe(data) {
-  return http.patch(`${apiEndpoint}/updateMe`, data);
+  return http.patch(`${apiEndpoint}/updateMe`, data, { file: data.photo });
 }
 
 export function updateMyPassword(data) {

@@ -8,15 +8,11 @@ const apiEndpoint = apiUrl + "users";
 http.setJwt(getJwt());
 
 /**
- * Sign in a registered user into the application
- * @param {String} email registered user email
- * @param {String} password registered user password
+ * Sign in an already registered user to the appliction
+ * @param {Object} data  {email and password}
  */
-export async function signIn(email, password) {
-  const res = await http.post(`${apiEndpoint}/signin`, {
-    email,
-    password,
-  });
+export async function signIn(data) {
+  const res = await http.post(`${apiEndpoint}/signin`, data);
   const jwt = res.data.token;
   localStorage.token = jwt; //store token
 }

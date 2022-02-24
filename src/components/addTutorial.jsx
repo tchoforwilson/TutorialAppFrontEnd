@@ -14,15 +14,9 @@ const AddTutorial = () => {
     setSubmitted(false)
   }
   const handleChange = (e) => {
-    e.target.name === 'title'
-      ? setTutorial({
-          title: e.target.value,
-          description: tutorial.description,
-        })
-      : setTutorial({
-          title: tutorial.title,
-          description: <e className="target value"></e>,
-        })
+    let tut = tutorial
+    tut[e.target.name] = e.target.value
+    setTutorial({ ...tut })
   }
   const handleClick = async (e) => {
     e.preventDefault()

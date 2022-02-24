@@ -7,32 +7,21 @@ import * as userService from '../services/userService'
 import auth from './../services/authService'
 
 const SignUp = () => {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [passwordConfirm, setPasswordConfirm] = useState('')
+  const [data, setData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    passwordConfirm: '',
+  })
   const [error, setError] = useState('')
   const handleChange = (e) => {
-    switch (e.target.name) {
-      case 'name':
-        setName(e.target.value)
-        break
-      case 'email':
-        setEmail(e.target.value)
-        break
-      case 'password':
-        setPassword(e.target.value)
-        break
-      case 'passwordConfirm':
-        setPasswordConfirm(e.target.value)
-        break
-      default:
-    }
+    let user = data
+    user[e.target.name] = e.target.value
+    setData({ ...user })
   }
   const handleClick = async (e) => {
     e.preventDefault()
     try {
-      const data = { name, email, password, passwordConfirm }
       const result = await userService.signUp(data)
       auth.loginWithJwt(result.data.token)
       window.location = '/'
@@ -47,11 +36,11 @@ const SignUp = () => {
       <div className="container">
         {error ? Alert(error.split('!')[0], error.split('!'), 'danger') : null}
         <form>
-          {Input('name', 'Name', name, handleChange, 'Your name')}
+          {Input('name', 'Name', data.name, handleChange, 'Your name')}
           {Input(
             'email',
             'Email',
-            email,
+            data.email,
             handleChange,
             'you@example.com',
             'email',
@@ -59,7 +48,7 @@ const SignUp = () => {
           {Input(
             'password',
             'Password',
-            password,
+            data.password,
             handleChange,
             'Password',
             'password',
@@ -67,7 +56,7 @@ const SignUp = () => {
           {Input(
             'passwordConfirm',
             'Confirm Password',
-            passwordConfirm,
+            data.passwordConfirm,
             handleChange,
             'Confirm password',
             'password',

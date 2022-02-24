@@ -6,19 +6,18 @@ import Button from './common/button'
 import auth from './../services/authService'
 
 const SignIn = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [data, setData] = useState({ email: '', password: '' })
   const [error, setError] = useState('')
 
   const handleChange = (e) => {
-    e.target.name === 'email'
-      ? setEmail(e.target.value)
-      : setPassword(e.target.value)
+    let user = data
+    user[e.target.name] = e.target.value
+    setData({ ...user })
   }
   const handleClick = async (e) => {
     e.preventDefault()
     try {
-      await auth.signIn(email, password)
+      await auth.signIn(data)
       window.location = '/dashboard'
     } catch (ex) {
       const data = ex.response.data
@@ -36,7 +35,7 @@ const SignIn = () => {
           {Input(
             'email',
             'Email',
-            email,
+            data.email,
             handleChange,
             'you@example.com',
             'email',
@@ -44,7 +43,7 @@ const SignIn = () => {
           {Input(
             'password',
             'Password',
-            password,
+            data.password,
             handleChange,
             'Password',
             'password',

@@ -23,17 +23,11 @@ const NavBar = ({ user }) => {
           <NavLink className="nav-item nav-link" to="/tutorials">
             Tutorials
           </NavLink>
-          {user.role !== 'admin' ||
-            (user.role !== 'publisher' && (
-              <Fragment>
-                <NavLink className="nav-item nav-link" to="/publishers">
-                  Publishers
-                </NavLink>
-                <NavLink className="nav-item nav-link" to="/users">
-                  Users
-                </NavLink>
-              </Fragment>
-            ))}
+          {user.role === 'admin' && (
+            <NavLink className="nav-item nav-link" to="/users">
+              Users
+            </NavLink>
+          )}
         </div>
         <div>
           <NavLink className="navbar-brand" to="/me">
