@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getMe, updateMe } from './../services/userService'
 import Alert from './common/alert'
@@ -6,6 +6,7 @@ import Button from './common/button'
 import Input from './common/input'
 
 const Profile = () => {
+  const [file, setFile] = useState()
   const [user, setUser] = useState({ name: '', email: '', role: '', photo: '' })
   const [userData, setUserData] = useState({
     name: '',
@@ -27,7 +28,11 @@ const Profile = () => {
   useEffect(() => {
     getUserProfileData()
   }, [])
-
+  const saveFile = (e) => {
+    e.preventDefault()
+    setFile(e.target.files[0])
+    console.log(file)
+  }
   const handleChange = (e) => {
     let userInfo = userData
     userInfo[e.target.name] = e.target.value
@@ -35,8 +40,12 @@ const Profile = () => {
   }
   const handleClick = async (e) => {
     e.preventDefault()
+    let formData = new FormData()
+    file && formData.append('photo', file)
+    formData.append('name', userData.name)
+    formData.append('email', userData.email)
     try {
-      const result = await updateMe(userData)
+      const result = await updateMe(formData)
       if (result.status === 200 && result.statusText === 'OK') {
         const data = result.data.data.user
         setUser({
@@ -44,6 +53,7 @@ const Profile = () => {
         })
         setIsName(false)
         setIsEmail(false)
+        setFile()
         setError('')
       }
     } catch (ex) {
@@ -79,20 +89,18 @@ const Profile = () => {
               />
               <figcaption>
                 <h1>{user.role}</h1>
-                <form className="form-inline" encType="multipart/form-data">
-                  <input
-                    type="file"
-                    name="photo"
-                    id="photo"
-                    onChange={handleChange}
-                    accept="image/*"
-                  />
-                  {Button(
-                    'Change photo',
-                    handleClick,
-                    'btn btn-success text-white my-2',
-                  )}
-                </form>
+                <input
+                  type="file"
+                  name="photo"
+                  id="photo"
+                  onChange={saveFile}
+                  accept="image/*"
+                />
+                {Button(
+                  'Change photo',
+                  handleClick,
+                  'btn btn-success text-white my-2',
+                )}
               </figcaption>
             </figure>
           </div>
