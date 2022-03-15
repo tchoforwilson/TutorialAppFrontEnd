@@ -31,7 +31,6 @@ const Profile = () => {
   const saveFile = (e) => {
     e.preventDefault()
     setFile(e.target.files[0])
-    console.log(file)
   }
   const handleChange = (e) => {
     let userInfo = userData

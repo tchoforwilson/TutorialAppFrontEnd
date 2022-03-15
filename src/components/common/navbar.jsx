@@ -3,49 +3,50 @@ import { NavLink } from 'react-router-dom'
 const NavBar = ({ user }) => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-      <NavLink className="navbar-brand" to="/dashboard">
-        TutorialApp
-      </NavLink>
-      <button
-        className="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navBar"
-        aria-controls="navBar"
-        aria-expanded="false"
-        aria-label="Toggle Navigation"
-      >
-        <span className="navbr-toggler-icon"></span>
-      </button>
-      <div className="collapse navbar-collapse" id="navBar">
-        <div className="navbar-nav mr-auto">
-          <NavLink className="nav-item nav-link" to="/tutorials">
-            Tutorials
-          </NavLink>
-          {user.role === 'admin' && (
-            <NavLink className="nav-item nav-link" to="/users">
-              Users
+      <div className="container">
+        <NavLink className="navbar-brand" to="/dashboard">
+          TutorialApp
+        </NavLink>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navBar"
+          aria-controls="navBar"
+          aria-expanded="false"
+          aria-label="Toggle Navigation"
+        >
+          <span className="navbr-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navBar">
+          <div className="navbar-nav mr-auto">
+            <NavLink className="nav-item nav-link" to="/tutorials">
+              Tutorials
             </NavLink>
-          )}
-        </div>
-        <div>
-          <NavLink className="navbar-brand" to="/me">
-            <figure>
-              <img
-                className="img-circle"
-                src={`http://localhost:8080/public/images/users/${user.photo}`}
-                alt={`${user.name}`}
-                style={{
-                  width: '50px',
-                  height: 'auto',
-                  borderRadius: '50%',
-                }}
-              />
-            </figure>
-          </NavLink>
-          <NavLink className="nav-item nav-link" to="/logout">
-            Logout
-          </NavLink>
+            {user.role === 'admin' && (
+              <NavLink className="nav-item nav-link" to="/users">
+                Users
+              </NavLink>
+            )}
+            <NavLink className="nav-item nav-link" to="/me">
+              <figure>
+                <img
+                  className="img-circle"
+                  src={`http://localhost:8080/public/images/users/${user.photo}`}
+                  alt={`${user.name}`}
+                  style={{
+                    width: '50px',
+                    height: 'auto',
+                    borderRadius: '50%',
+                  }}
+                />
+                <figcaption>{user.name}</figcaption>
+              </figure>
+            </NavLink>
+            <NavLink className="nav-item nav-link" to="/logout">
+              Logout
+            </NavLink>
+          </div>
         </div>
       </div>
     </nav>

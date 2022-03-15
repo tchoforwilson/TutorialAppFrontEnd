@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import Button from './../common/button'
 import SearchBox from './../common/searchBox'
 import TutorialList from './../tutorialList'
-import { getTutorials, deleteTutorial } from './../../services/tutorialService'
+import { getTutorials } from './../../services/tutorialService'
 
 const UserHome = ({ user }) => {
   const [tutorials, setTutorials] = useState([])
@@ -19,11 +19,11 @@ const UserHome = ({ user }) => {
     const { data } = await getTutorials(searchQuery)
     setTutorials(data.data.tutorials)
   }
-  const refreshList = () => {
-    getData()
-    setCurrentTutorial(null)
-    setCurrentIndex(-1)
-  }
+  // const refreshList = () => {
+  //   getData()
+  //   setCurrentTutorial(null)
+  //   setCurrentIndex(-1)
+  // }
   const setActiveTutorial = (tutorial, index) => {
     setCurrentTutorial(tutorial)
     setCurrentIndex(index)
@@ -54,18 +54,7 @@ const UserHome = ({ user }) => {
     setSearchQuery(searchQuery)
     getData()
   }
-  const handleDelete = async () => {
-    const ans = window.confirm(
-      `Are you sure you want to delete ${currentTutorial.title}?`,
-    )
-    if (ans) {
-      try {
-        const result = await deleteTutorial(currentTutorial._id)
-        if (result.status === 204 && result.statusText === 'success') {
-        }
-      } catch (ex) {}
-    }
-  }
+
   return (
     <div className="container mt-4">
       <div className="list row">
@@ -76,14 +65,13 @@ const UserHome = ({ user }) => {
             handleClick={handleSearchClick}
           />
         </div>
-        {user.role === 'admin' ||
-          (user.role === 'publisher' && (
-            <div className="col-md-4">
-              <Link to="/new" className="btn btn-primary text-right">
-                New tutorial
-              </Link>
-            </div>
-          ))}
+        {user.role === 'admin' && (
+          <div className="col-md-4">
+            <Link to="/new" className="btn btn-primary text-right">
+              New tutorial
+            </Link>
+          </div>
+        )}
       </div>
       <div className="row">
         <div className="col-md-7">
@@ -123,15 +111,14 @@ const UserHome = ({ user }) => {
                 </label>{' '}
                 {currentTutorial.published ? 'Published' : 'Pending'}
               </div>
-              {user.role !== 'admin' ||
-                (user.role !== 'publisher' && (
-                  <Link
-                    to={`/tutorial/${currentTutorial._id}`}
-                    className="btn btn-warning"
-                  >
-                    Edit
-                  </Link>
-                ))}
+              {user.role !== 'admin' && (
+                <Link
+                  to={`/tutorial/${currentTutorial._id}`}
+                  className="btn btn-warning"
+                >
+                  Edit
+                </Link>
+              )}
             </div>
           ) : (
             <div>

@@ -5,10 +5,7 @@ const apiUrl = "http://localhost:8080/api/v1/";
 const apiEndpoint = apiUrl + "users";
 /**
  * Register a new user into application with user data
- * @param {String} name valid user name
- * @param {String} email valid use email
- * @param {String} password valid password
- * @param {String} passwordConfirm confirmed password
+ * @param {Object} data -> {name , email, password, passwordConfirm}
  * @returns
  */
 export function signUp(data) {
@@ -20,14 +17,13 @@ export function getMe() {
 }
 
 /**
- * Patch request to update user data, accept only user name and email, no
- * password are accepted and user role cannot be modified here.
- * @param {String} name  -> User name
- * @param {String} email  -> User email
+ * Patch request to update user data
+ *
+ * @param {Object} data  -> {name, email, photo}
  * @returns Promise
  */
 export function updateMe(data) {
-  return http.patch(`${apiEndpoint}/updateMe`, data, { file: data.photo });
+  return http.patch(`${apiEndpoint}/updateMe`, data);
 }
 
 export function updateMyPassword(data) {
